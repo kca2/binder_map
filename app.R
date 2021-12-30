@@ -23,7 +23,8 @@ ui <- bootstrapPage(
   fluidRow(column(width = 5, offset = 0,
                   div(style='padding-left:10px; padding-right:1px; padding-top:1px; padding-bottom:5px',
                       id = "usr",
-                      textInput("usr", "Please input your participant number: ")))), 
+                      #textInput("usr", "Please input your participant number: "),
+                      numericInput("usr", "Please select your participant number: ", "1", min = 1, max = 30, step = 1)))), 
   
   fluidRow(column(width = 5, offset = 0,
                   div(style='padding-left:10px; padding-right:1px; padding-top:1px; padding-bottom:5px',
@@ -67,11 +68,12 @@ server <- function(input, output, session) {
     show("dldiv")
   })
   
-  output$downloadData <- downloadHandler(
+  output$dlshp <- downloadHandler(
     filename = function() {
       msa_sub <- msa_proj[msa_proj$SPECIES == input$spp, ]
       lyrName <- unique(msa_sub$SPECIES)
-      paste(lyrName, "zip", sep = ".")
+      participant <- paste0(input$usr)
+      paste("P", participant, "_", lyrName, ".zip", sep = "")
       
     },
     content = function(file) {
