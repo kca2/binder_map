@@ -54,7 +54,7 @@ server <- function(input, output, session) {
                      circleOptions = FALSE,
                      rectangleOptions = FALSE,
                      markerOptions = FALSE,
-                     singleFeature = TRUE)
+                     editOptions = editToolbarOptions(edit = FALSE, remove = TRUE))
   })
   
   observe({
