@@ -22,6 +22,11 @@ ui <- bootstrapPage(
   
   fluidRow(column(width = 5, offset = 0,
                   div(style='padding-left:10px; padding-right:1px; padding-top:1px; padding-bottom:5px',
+                      id = "usr",
+                      textInput("usr", "Please input your participant number: ")))), 
+  
+  fluidRow(column(width = 5, offset = 0,
+                  div(style='padding-left:10px; padding-right:1px; padding-top:1px; padding-bottom:5px',
                       id = "selection",
                       selectInput("spp", "Please select a spp: ", choices = spp_list)))),
   
@@ -51,13 +56,23 @@ server <- function(input, output, session) {
                      singleFeature = TRUE)
   })
   
+  observe({
+    msa_sub <- msa_proj[msa_proj$SPECIES == input$spp, ]
+    leafletProxy("map", data = msa_filter()) %>% 
+      clearShapes() %>% 
+      addPolygons(weight = 1, color = "blue", popup = ~paste("No. of Surveyees: ", msa_sub$COUNT_Surv))
+  })
+  
   observeEvent(input$map_draw_new_feature, {
     show("dldiv")
   })
   
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste("shapefile", "zip", sep=".")
+      msa_sub <- msa_proj[msa_proj$SPECIES == input$spp, ]
+      lyrName <- unique(msa_sub$SPECIES)
+      paste(lyrName, "zip", sep = ".")
+      
     },
     content = function(file) {
       temp_shp <- tempdir()
