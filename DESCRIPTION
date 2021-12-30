@@ -9,7 +9,6 @@ License: What license it uses
 Depends: 
     leaflet,
     leaflet.extras,
-    magrittr,
     rgdal,
     sf,
     shiny,
