@@ -1,7 +1,7 @@
 library(shiny)
 library(leaflet)
 library(leaflet.extras)
-library(rgdal)
+#library(rgdal)
 library(sf)
 library(shinyjs)
 library(tidyverse)
@@ -10,7 +10,8 @@ library(tidyverse)
 # save shp file as a RDA file to read into r? is this possible? 
 # https://www.r-bloggers.com/2021/12/how-to-read-rda-file-in-r-with-example/
 
-msa <- readOGR("./data", layer = "all_spp_msa", GDAL1_integer64_policy = TRUE)
+#msa <- readOGR("./data", layer = "all_spp_msa", GDAL1_integer64_policy = TRUE)
+msa <- read_sf(dsn = "./data", layer = "all_spp_msa")
 
 msa$Species <- gsub("[[:punct:]]", " ", msa$Species) # remove special characters
 
@@ -20,7 +21,8 @@ msa$countCol <- ifelse(msa$COUNT_ == 500, "green", msa$countCol)
 
 msa$parts <- ifelse(msa$COUNT_ == 500, "ICZM Atlas of Sig. Coastal & Marine Areas", msa$COUNT_)
 
-msa_proj <- spTransform(msa, "+proj=longlat +datum=WGS84")
+#msa_proj <- spTransform(msa, "+proj=longlat +datum=WGS84")
+msa_proj <- st_transform(msa, "+proj=longlat +datum=WGS84")
 
 spp_list <- unique(msa_proj$Species)
 

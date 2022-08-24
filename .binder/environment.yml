@@ -1,0 +1,12 @@
+name: binder_map
+channels:
+  - conda-forage
+  - r
+dependencies:
+  - r-base=3.6
+  - r-shiny
+  - r-leaflet
+  - r-leaflet.extras
+  - r-sf
+  - r-shinyjs
+  - r-tidyverse
