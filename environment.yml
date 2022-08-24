@@ -1,5 +1,0 @@
-channels:
-  - conda-forage
-  - r
-dependencies:
-  - r-base=3.6
