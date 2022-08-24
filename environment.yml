@@ -1,7 +1,6 @@
 name: binder_map
 channels:
   - conda-forage
-  - r
 dependencies:
   - r-base=3.6
   - r-shiny
