@@ -1,7 +1,6 @@
 library(shiny)
 library(leaflet)
 library(leaflet.extras)
-#library(rgdal)
 library(sf)
 library(shinyjs)
 library(tidyverse)
